@@ -1,10 +1,11 @@
 import streamlit as st
 import pickle
 import spacy
+import en_core_web_sm
 from spacy.lang.en.stop_words import STOP_WORDS
 
 # Load SpaCy model
-nlp = spacy.load('en_core_web_sm')
+nlp = en_core_web_sm.load()
 
 # Text preprocessing
 def transform_text(text):
