@@ -1,21 +1,35 @@
 import streamlit as st
 import pickle
-import spacy
-import en_core_web_sm
-from spacy.lang.en.stop_words import STOP_WORDS
-
-# Load SpaCy model
-nlp = en_core_web_sm.load()
-
+import string
 # Text preprocessing
+from nltk.corpus import stopwords
+import nltk
+from nltk.stem.porter import PorterStemmer
+
+ps = PorterStemmer()
+
+
 def transform_text(text):
     text = text.lower()
-    doc = nlp(text)
+    text = nltk.word_tokenize(text)
 
     y = []
-    for token in doc:
-        if token.is_alpha and token.text not in STOP_WORDS:
-            y.append(token.lemma_)
+    for i in text:
+        if i.isalnum():
+            y.append(i)
+
+    text = y[:]
+    y.clear()
+
+    for i in text:
+        if i not in stopwords.words('english') and i not in string.punctuation:
+            y.append(i)
+
+    text = y[:]
+    y.clear()
+
+    for i in text:
+        y.append(ps.stem(i))
 
     return " ".join(y)
 
