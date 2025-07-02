@@ -10,8 +10,8 @@ ps = PorterStemmer()
 
 def transform_text(text):
     text = text.lower()
-    text = nltk.word_tokenize(text)
-
+    text = text.split()  # Changed here
+    
     y = []
     for i in text:
         if i.isalnum():
@@ -31,6 +31,7 @@ def transform_text(text):
         y.append(ps.stem(i))
 
     return " ".join(y)
+
 
 # Load vectorizer and model
 tfidf = pickle.load(open('vectorizer.pkl', 'rb'))
